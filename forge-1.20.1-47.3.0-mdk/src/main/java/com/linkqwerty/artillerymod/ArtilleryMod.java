@@ -2,6 +2,7 @@ package com.linkqwerty.artillerymod;
 
 //Imports
 import com.linkqwerty.artillerymod.blocks.BlackPowderChargeBlock;
+import com.linkqwerty.artillerymod.blocks.BlackPowderChargeWetBlock;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -28,17 +29,19 @@ public class ArtilleryMod {
 	// Mod identifier
     public static final String MODID = "artillerymod";
     // DeferredRegister for blocks
-    private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     // DeferredRegister for items (i.e. item_blocks)
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     // Define a Deferred Register to hold CreativeModeTabs collection
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
     
     // Blocks
-    public static final RegistryObject<Block> BLACKPOWDERCHARGEWET_BLOCK = BLOCKS.register("blackpowderchargewet_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.WOOL).instrument(NoteBlockInstrument.GUITAR).strength(0.8F).sound(SoundType.WOOL).ignitedByLava()));
-    public static final RegistryObject<Block> BLACKPOWDERCHARGE_BLOCK = BLOCKS.register("blackpowdercharge_block", () -> new BlackPowderChargeBlock(BLACKPOWDERCHARGEWET_BLOCK, BlockBehaviour.Properties.of().mapColor(MapColor.FIRE).instrument(NoteBlockInstrument.GUITAR).strength(0.8F).sound(SoundType.WOOL).ignitedByLava()));
+    public static final RegistryObject<Block> BLACKPOWDERCHARGEBROKEN_BLOCK = BLOCKS.register("blackpowderchargesbroken_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.WOOL).instrument(NoteBlockInstrument.BASEDRUM).strength(0.4F).sound(SoundType.WOOL).ignitedByLava()));
+    public static final RegistryObject<Block> BLACKPOWDERCHARGEWET_BLOCK = BLOCKS.register("blackpowderchargewet_block", () -> new BlackPowderChargeWetBlock(BLACKPOWDERCHARGEBROKEN_BLOCK, BlockBehaviour.Properties.of().mapColor(MapColor.WOOL).instrument(NoteBlockInstrument.BASS).strength(0.4F).randomTicks().sound(SoundType.WOOL).ignitedByLava()));
+    public static final RegistryObject<Block> BLACKPOWDERCHARGE_BLOCK = BLOCKS.register("blackpowdercharge_block", () -> new BlackPowderChargeBlock(BLACKPOWDERCHARGEWET_BLOCK, BlockBehaviour.Properties.of().mapColor(MapColor.WOOL).instrument(NoteBlockInstrument.GUITAR).strength(0.4F).randomTicks().sound(SoundType.WOOL).ignitedByLava()));
     
     // Items
+    public static final RegistryObject<Item> BLACKPOWDERCHARGEBROKEN_BLOCK_ITEM = ITEMS.register("blackpowderchargebroken_item", () -> new BlockItem(BLACKPOWDERCHARGEBROKEN_BLOCK.get(), new Item.Properties()));
     public static final RegistryObject<Item> BLACKPOWDERCHARGEWET_BLOCK_ITEM = ITEMS.register("blackpowderchargewet_item", () -> new BlockItem(BLACKPOWDERCHARGEWET_BLOCK.get(), new Item.Properties()));
     public static final RegistryObject<Item> BLACKPOWDERCHARGE_BLOCK_ITEM = ITEMS.register("blackpowdercharge_item", () -> new BlockItem(BLACKPOWDERCHARGE_BLOCK.get(), new Item.Properties()));
     
@@ -51,6 +54,7 @@ public class ArtilleryMod {
             .displayItems((parameters, output) -> {
                 output.accept(BLACKPOWDERCHARGE_BLOCK_ITEM.get());
                 output.accept(BLACKPOWDERCHARGEWET_BLOCK_ITEM.get());
+                output.accept(BLACKPOWDERCHARGEBROKEN_BLOCK_ITEM.get());
             }).build());
 
     // Constructor
@@ -58,7 +62,7 @@ public class ArtilleryMod {
     {
         // Define EventBus
     	IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
+    	
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered

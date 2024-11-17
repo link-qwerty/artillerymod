@@ -1,0 +1,8 @@
+{
+	"parent": "block/cube_bottom_top",
+	"textures": {
+    	"bottom": "artillerymod:block/blackpowder_charge_bottom_broken",
+    	"side": "artillerymod:block/blackpowder_charge_side_broken",
+    	"top": "artillerymod:block/blackpowder_charge_top_broken"
+	}
+}

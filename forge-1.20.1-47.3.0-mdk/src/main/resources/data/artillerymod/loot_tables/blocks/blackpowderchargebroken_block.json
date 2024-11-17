@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 1.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "artillerymod:blackpowderchargebroken_item"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "artillerymod:blocks/blackpowderchargebroken_block"
+}
